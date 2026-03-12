@@ -68,6 +68,10 @@ cd laravel-api-nutrisport
 ./vendor/bin/sail artisan key:generate
 ```
 
+6. Utilise le fichier .env
+
+Change le nom du fichier.env.test en a.env.
+
 ## Authentification API
 
 L’authentification est gérée via JWT.
