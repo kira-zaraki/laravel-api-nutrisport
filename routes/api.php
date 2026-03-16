@@ -36,16 +36,18 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/feeds/products.{type}',[FeedController::class, 'products']);
 
-    Route::prefix('cart')->group(function(){
-        Route::post('/add',[CartController::class, 'add']);
-        Route::post('/remove',[CartController::class, 'remove']);
-        Route::post('/show',[CartController::class, 'show']);
-    });
-
     Route::prefix('agent')->middleware(CheckAgent::class)->group(function () {
         Route::get('orders', [AdminOrderController::class, 'recent']);
         Route::post('product', [AdminProductController::class, 'store']);
     });
 
     Route::put('/user/profile', [UserController::class, 'updateProfile']);
+});
+
+
+
+Route::prefix('cart')->group(function(){
+    Route::post('/add',[CartController::class, 'add']);
+    Route::post('/remove',[CartController::class, 'remove']);
+    Route::post('/show',[CartController::class, 'show']);
 });
