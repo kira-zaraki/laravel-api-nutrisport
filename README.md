@@ -239,6 +239,47 @@ Une collection Postman est fournie pour tester facilement tous les endpoints.
 - Télécharger le fichier JSON : `postman/NutriSport_API.postman_collection.json`  
 - Importer dans Postman via **File → Import → Upload Files**
 
+## Agent Nutrition Advisor
+
+L’application inclut un agent d’assistance nutrition sportive, accessible via :
+
+```bash
+POST /ai/nutrition-advisor
+```
+Cet agent permet à vos clients de :
+
+- Rechercher des produits nutritionnels adaptés à leurs besoins
+- Ajouter des produits au panier
+- Consulter le contenu de leur panier
+- Passer directement commande en utilisant les informations de livraison du dernier ordre
+
+### Exemple de demandes que l’on peut faire à l’agent
+ ```bash
+"Je veux une whey"
+
+"Ajoute ces 2 produits sur ma carte, s'il te plaît, en 3 pour chacune"
+
+"Mets-les sur ma cart"
+
+"Passe à la caisse"
+```
+
+### Fonctionnement technique
+
+L’agent utilise Laravel AI SDK pour interagir avec le catalogue et le panier.
+
+Tools disponibles pour l’agent :
+
+- SearchProductsTool → recherche les produits dans le catalogue
+- AddToCartTool → ajoute un ou plusieurs produits au panier
+- ViewCartTool → consulte le panier en temps réel
+- CheckoutTool → passe commande en utilisant le OrderService et les informations de livraison du dernier ordre
+
+### Note sur les modèles AI
+
+- Dans ce projet, Ollama est utilisé pour le moteur AI.
+- Pour obtenir des résultats plus précis et contraints (IDs produits exacts, gestion multi-produits, logique métier stricte), il est recommandé d’utiliser un modèle plus puissant ou un provider AI plus performant.
+
 ## Conclusion
 
 Ce projet démontre :

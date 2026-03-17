@@ -12,6 +12,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Ai\AIController;
 use App\Http\Middleware\CheckAgent;
 
 Route::get('/user', function (Request $request) {
@@ -42,9 +43,9 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::put('/user/profile', [UserController::class, 'updateProfile']);
+
+    Route::post('/ai/nutrition-advisor', [AIController::class, 'chat']);
 });
-
-
 
 Route::prefix('cart')->group(function(){
     Route::post('/add',[CartController::class, 'add']);

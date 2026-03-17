@@ -27,6 +27,20 @@ class Product extends Model
             ]);
     }
 
+    public function scopeSearch($query, $keyword)
+    {
+        if (!$keyword) {
+            return $query;
+        }
+
+        return $query->where('name', 'like', "%{$keyword}%");
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('stock', '>', 0);
+    }
+
     public function resolveRouteBinding($value, $field = null)
     {
         $site = request()->route('site');

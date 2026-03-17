@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
+use App\Models\Product;
 
 class CartService
 {
@@ -20,6 +21,19 @@ class CartService
 
     public function add($site,$cartId,$productId,$qty)
     {
+        if ($qty <= 0)
+            throw new \InvalidArgumentException('La quantité doit être supérieure à 0');
+
+        $product = Product::with(['prices' => fn ($q) => $q->where('site_id', $site)])
+            ->findOrFail($productId);
+
+        if ($product->stock < $qty)
+            throw new \Exception('Stock insuffisant');
+
+        $price = $product->prices->first()?->price;
+
+        if (!$price)
+            throw new \Exception('Prix indisponible pour ce site');
 
         $cart = $this->getCart($site,$cartId);
 
