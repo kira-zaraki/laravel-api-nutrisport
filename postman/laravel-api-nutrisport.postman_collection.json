@@ -102,6 +102,14 @@
 				"header": []
 			},
 			"response": []
+		},
+		{
+			"name": "AInutritionAdvisor",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"variable": [
