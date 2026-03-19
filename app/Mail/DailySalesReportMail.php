@@ -38,7 +38,6 @@ class DailySalesReportMail extends Mailable
      */
     public function content(): Content
     {
-        dd($this->report);
         return new Content(
             view: 'emails.daily-sales-report',
         );

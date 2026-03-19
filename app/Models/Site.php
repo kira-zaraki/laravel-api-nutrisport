@@ -8,7 +8,7 @@ class Site extends Model
 {
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'prices')
+        return $this->belongsToMany(Product::class, 'product_prices')
             ->withPivot(['price'])
             ->withTimestamps();
     }

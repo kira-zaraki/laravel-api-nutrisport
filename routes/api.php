@@ -49,6 +49,6 @@ Route::middleware('auth:api')->group(function () {
 
 Route::prefix('cart')->group(function(){
     Route::post('/add',[CartController::class, 'add']);
-    Route::post('/remove',[CartController::class, 'remove']);
+    Route::delete('/remove',[CartController::class, 'remove']);
     Route::post('/show',[CartController::class, 'show']);
 });
