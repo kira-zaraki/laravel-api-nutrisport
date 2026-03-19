@@ -60,8 +60,9 @@ class OrderService
             $order->items()->create($item);
         }
 
+        OrderCreated::dispatch($order);
+
         DB::commit();
-        event(new OrderCreated($order));
 
         return $order;
 

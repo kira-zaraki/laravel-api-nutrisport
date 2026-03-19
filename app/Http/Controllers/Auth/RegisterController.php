@@ -13,13 +13,6 @@ class RegisterController extends Controller
     public function register(RegisterUserRequest $request)
     {
         try {
-            $request->validate([
-                'name'=>'required|string',
-                'email'=>'required|email|unique:users',
-                'password'=>'required|string|min:6|confirmed',
-                'site_id'=>'required|exists:sites,id'
-            ]);
-
             $user = User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
