@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Cart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CartService;
+use App\Http\Requests\AddToCartRequest;
 
 class CartController extends Controller
 {
 
-    public function add(Request $request, CartService $cart)
+    public function add(AddToCartRequest $request, CartService $cart)
     {
         $cart = $cart->add(
             $request->site,

@@ -23,19 +23,18 @@ Route::post('register',[RegisterController::class, 'register']);
 Route::post('/login',[LoginController::class, 'login'])->name('login');
 Route::get('/refresh', [RefreshController::class, 'refresh']);
 
+Route::prefix('products')->group(function(){
+    Route::get('/', [ProductController::class, 'productListe']);
+    Route::get('{product}', [ProductController::class, 'show']);
+    Route::get('site/{site}', [ProductController::class, 'productsBySite']);
+});
+Route::get('/sites/{site}/products/{product}', [ProductController::class, 'showBySite']);
+Route::get('/feeds/products.{type}',[FeedController::class, 'products']);
+
 Route::middleware('auth:api')->group(function () {
 
     Route::post('/order', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'orderByUser']);
-
-    Route::prefix('products')->group(function(){
-        Route::get('/', [ProductController::class, 'productListe']);
-        Route::get('{product}', [ProductController::class, 'show']);
-        Route::get('site/{site}', [ProductController::class, 'productsBySite']);
-    });
-    Route::get('/sites/{site}/products/{product}', [ProductController::class, 'showBySite']);
-
-    Route::get('/feeds/products.{type}',[FeedController::class, 'products']);
 
     Route::prefix('agent')->middleware(CheckAgent::class)->group(function () {
         Route::get('orders', [AdminOrderController::class, 'recent']);

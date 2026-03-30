@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Services\CartService;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -37,11 +38,11 @@ class OrderController extends Controller
             return $this->error('Impossible de créer la commande', 500, $th->getMessage());
         }
 
-        return $this->success($order, 'Commande créée avec succès');
+        return $this->success(new OrderResource($order), 'Commande créée avec succès');
     }
 
     public function orderByUser(){
-        $orders = auth()->user()->orders()->with('items.product')->latest()->get();
-        return $this->success($orders, 'Commandes récupérées avec succès');
+        $orders = auth()->user()->orders()->latest()->get();
+        return $this->success(OrderResource::collection($orders), 'Commandes récupérées avec succès');
     }
 }

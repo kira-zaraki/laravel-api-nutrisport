@@ -5,11 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\ProductPrice;
+use App\Http\Resources\ProductResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 
+#[UseResource(ProductResource::class)]
 class Product extends Model
 {
     protected $fillable = ['name','stock'];
+    protected $appends = ['in_stock'];
 
     public function prices(): HasMany
     {
@@ -51,5 +56,12 @@ class Product extends Model
         return static::bySite($site->id)
             ->where($field ?? $this->getRouteKeyName(), $value)
             ->firstOrFail();
+    }
+
+    protected function inStock(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->stock > 0,
+        );
     }
 }

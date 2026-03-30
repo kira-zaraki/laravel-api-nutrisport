@@ -23,7 +23,7 @@ class XmlFeedGenerator implements FeedGenerator
 
             $item->addChild('id', $product->id);
             $item->addChild('name', $product->name);
-            $item->addChild('stock', $product->stock > 0 ? 'available' : 'out_of_stock');
+            $item->addChild('stock', $product->in_stock ? 'available' : 'out_of_stock');
 
         }
 

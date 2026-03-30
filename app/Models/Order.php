@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\OrderItem;
 use App\Enums\OrderStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Order extends Model
 {
@@ -25,6 +26,8 @@ class Order extends Model
         'status' => OrderStatus::class,
     ];
 
+    protected $appends = ['rest_to_pay'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -38,5 +41,12 @@ class Order extends Model
     public function scopeLastDays($query, int $days = 5)
     {
         return $query->where('created_at', '>=', now()->subDays($days));
+    }
+
+    protected function restToPay(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => max(0, $this->total - ($this->paid ?? 0)),
+        );
     }
 }
