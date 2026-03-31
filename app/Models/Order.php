@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\OrderItem;
 use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\OrderObserver;
 
+#[ObservedBy([OrderObserver::class])]
 class Order extends Model
 {
     protected $fillable = [
@@ -36,6 +39,11 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function site(): BelongsTo
+    {
+        return $this->belongsTo(Site::class);
     }
 
     public function scopeLastDays($query, int $days = 5)
