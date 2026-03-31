@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
-use App\Events\OrderCreated;
 use App\Enums\OrderStatus;
 
 class OrderService
@@ -59,8 +58,6 @@ class OrderService
         foreach ($items as $item) {
             $order->items()->create($item);
         }
-
-        OrderCreated::dispatch($order);
 
         DB::commit();
 

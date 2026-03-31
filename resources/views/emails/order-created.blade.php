@@ -4,7 +4,7 @@
 
 <p>Total: {{ $order->total }} €</p>
 
-<p>Site: {{ $order->site }}</p>
+<p>Site: {{ $order->site->domain }}</p>
 
 <h3>Products</h3>
 
